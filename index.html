@@ -1,112 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flashcards Pro</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flashcards Pro Responsive</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:Segoe UI,Arial,sans-serif;
-background:linear-gradient(135deg,#dbeafe,#ede9fe,#fdf2f8);
-color:#1e293b;
-}
-.wrap{max-width:1000px;margin:30px auto;padding:24px}
-h1{text-align:center;margin:0 0 20px;color:#4338ca}
-.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-input{padding:12px 14px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;background:#fff}
-input[type=file]{flex:2}
-#s{flex:1}
-#p{background:#fff;border-radius:999px;padding:10px 18px;font-weight:700;display:inline-block;box-shadow:0 8px 20px rgba(0,0,0,.08);margin-bottom:18px}
-.card{perspective:1200px;height:430px}
-.inner{position:relative;width:100%;height:100%;transition:transform .7s;transform-style:preserve-3d}
-.flip{transform:rotateY(180deg)}
-.face{
-position:absolute;inset:0;backface-visibility:hidden;
-border-radius:24px;
-padding:35px;
-background:rgba(255,255,255,.96);
-box-shadow:0 20px 45px rgba(0,0,0,.15);
-}
-.front{
-display:flex;justify-content:center;align-items:center;
-font-size:34px;font-weight:700;line-height:1.5;text-align:center;
-}
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#dbeafe,#ede9fe,#fdf2f8);color:#1e293b}
+.wrap{max-width:1000px;margin:20px auto;padding:20px}
+h1{text-align:center;color:#4338ca}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+input{padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;background:#fff}
+input[type=file]{flex:2}#s{flex:1;min-width:180px}
+#p{background:#fff;padding:10px 18px;border-radius:999px;font-weight:700;display:inline-block;box-shadow:0 8px 20px rgba(0,0,0,.08);margin-bottom:16px}
+.card{perspective:1200px;height:430px}.inner{position:relative;width:100%;height:100%;transition:.7s;transform-style:preserve-3d}.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:24px;padding:24px;background:rgba(255,255,255,.96);box-shadow:0 20px 45px rgba(0,0,0,.15)}
+.front{display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(18px,4.5vw,34px);font-weight:700;line-height:1.4;overflow:auto;word-break:break-word;overflow-wrap:anywhere}
 .back{transform:rotateY(180deg);overflow:auto}
-.back h3{text-align:center;color:#4338ca;margin-top:0}
-ol{padding-left:30px}
-li{
-margin:14px 0;
-padding:16px;
-border-radius:14px;
-background:#f8fafc;
-border:1px solid #dbeafe;
-font-size:20px;
-transition:.25s;
+.back h3{text-align:center;color:#4338ca}
+ol{padding-left:26px}li{margin:12px 0;padding:14px;border-radius:12px;background:#f8fafc;border:1px solid #dbeafe;font-size:20px}
+.correct{background:linear-gradient(90deg,#16a34a,#22c55e)!important;color:#fff;font-weight:700;border:none}
+.controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+button{padding:12px 18px;border:none;border-radius:12px;background:#4338ca;color:#fff;font-weight:600;cursor:pointer}
+button:hover{background:#312e81}
+@media(max-width:600px){
+.wrap{padding:12px}.card{height:320px}.face{padding:16px}.front{font-size:clamp(16px,5vw,22px)}li{font-size:16px;padding:12px}.toolbar{flex-direction:column}input{width:100%}.controls button{flex:1;min-width:100px}
 }
-li:hover{transform:translateX(6px)}
-.correct{
-background:linear-gradient(90deg,#16a34a,#22c55e)!important;
-color:#fff;font-weight:700;
-border:none;
-box-shadow:0 10px 20px rgba(34,197,94,.35);
-}
-button{
-padding:12px 18px;
-margin:6px;
-border:none;
-border-radius:12px;
-background:#4338ca;
-color:#fff;
-font-size:15px;
-font-weight:600;
-cursor:pointer;
-box-shadow:0 8px 18px rgba(67,56,202,.25);
-}
-button:hover{transform:translateY(-2px);background:#312e81}
-</style></head>
-<body><div class="wrap">
+</style></head><body><div class="wrap">
 <h1>Flashcards Pro</h1>
 <div class="toolbar"><input type=file id=f accept=".xlsx,.xls"><input id=s placeholder="Search"></div>
 <div id=p>Card 0 of 0</div>
-<div class="card"><div class="inner" id=inner>
-<div class="face front" id=q>Upload Excel</div>
-<div class="face back"><h3>Options</h3><ol id=opts type=A></ol></div>
-</div></div>
-<button onclick="flip()">Flip</button><button onclick="prev()">Prev</button><button onclick="next()">Next</button><button onclick="shuffle()">Shuffle</button>
+<div class="card"><div class="inner" id=inner><div class="face front" id=q>Upload Excel</div><div class="face back"><h3>Options</h3><ol id=opts type=A></ol></div></div></div>
+<div class="controls"><button onclick="flip()">Flip</button><button onclick="prev()">Prev</button><button onclick="next()">Next</button><button onclick="shuffle()">Shuffle</button></div>
 <script>
 let all=[],cards=[],i=0;
-f.onchange=e=>{
-const fr=new FileReader();
-fr.onload=x=>{
-const wb=XLSX.read(new Uint8Array(x.target.result),{type:'array'});
-const sh=wb.Sheets[wb.SheetNames[0]];
-all=XLSX.utils.sheet_to_json(sh,{raw:false,defval:""});
-cards=[...all];i=0;render();
-};fr.readAsArrayBuffer(e.target.files[0]);
-};
+f.onchange=e=>{const fr=new FileReader();fr.onload=x=>{const wb=XLSX.read(new Uint8Array(x.target.result),{type:'array'});const sh=wb.Sheets[wb.SheetNames[0]];all=XLSX.utils.sheet_to_json(sh,{raw:false,defval:""});cards=[...all];i=0;render();};fr.readAsArrayBuffer(e.target.files[0]);};
 s.oninput=()=>{const k=s.value.toLowerCase();cards=all.filter(r=>String(r.Question||"").toLowerCase().includes(k));i=0;render();}
 function val(r,n){return r[n]??r[n.toLowerCase()]??r[n.toUpperCase()]??""}
-function render(){
-if(!cards.length){q.textContent="No cards";opts.innerHTML="";return;}
-inner.classList.remove("flip");
-const r=cards[i];
-q.textContent=val(r,"Question");
-opts.innerHTML="";
-const ans=String(val(r,"Answer")).trim().toUpperCase();
-["A","B","C","D"].forEach(L=>{
-let key=L.toLowerCase();
-let li=document.createElement("li");
-li.textContent=val(r,key)||val(r,"Option "+L);
-if(L===ans)li.className="correct";
-opts.appendChild(li);
-});
-p.textContent=`Card ${i+1} of ${cards.length}`;
-}
-function flip(){inner.classList.toggle("flip")}
-function next(){if(cards.length){i=(i+1)%cards.length;render();}}
-function prev(){if(cards.length){i=(i-1+cards.length)%cards.length;render();}}
-function shuffle(){for(let j=cards.length-1;j>0;j--){let k=Math.floor(Math.random()*(j+1));[cards[j],cards[k]]=[cards[k],cards[j]];}i=0;render();}
+function render(){if(!cards.length){q.textContent="No cards";opts.innerHTML="";return;}inner.classList.remove("flip");const r=cards[i];q.textContent=val(r,"Question");opts.innerHTML="";const ans=String(val(r,"Answer")).trim().toUpperCase();["A","B","C","D"].forEach(L=>{let li=document.createElement("li");li.textContent=val(r,L.toLowerCase())||val(r,"Option "+L);if(L===ans)li.className="correct";opts.appendChild(li);});p.textContent=`Card ${i+1} of ${cards.length}`;}
+function flip(){inner.classList.toggle("flip")}function next(){if(cards.length){i=(i+1)%cards.length;render();}}function prev(){if(cards.length){i=(i-1+cards.length)%cards.length;render();}}function shuffle(){for(let j=cards.length-1;j>0;j--){let k=Math.floor(Math.random()*(j+1));[cards[j],cards[k]]=[cards[k],cards[j]];}i=0;render();}
 </script></div></body></html>
